@@ -26,7 +26,7 @@ function welcome(name:string, repoUrl: string) {
  }
 
  async function Diff() {
-    if (ghToken) {
+    if (ghToken && context.payload.pull_request) {
         const octokit = getOctokit(ghToken)
         const result = await octokit.rest.repos.compareCommits({
             repo: context.repo.repo,
