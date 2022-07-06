@@ -1,0 +1,8 @@
+name: 'TS GitHub action hand-on'
+author: 'Admin'
+description: 'Hands-on project'
+
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
+  
