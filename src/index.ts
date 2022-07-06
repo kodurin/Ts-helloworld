@@ -1,31 +1,21 @@
-import { getInput } from "@actions/core"
-
-import { context } from "@actions/github"
+import { getInput } from "@actions/core";
+import { context, getOctokit } from "@actions/github";
+import dedent from 'dedent';
 
 type GitHubContext = typeof context
 
 const inputName = getInput("name");
+const ghToken = getInput("ghToken");
 
 welcome(inputName, repoUrl(context));
 
-console.log('--- Action Info ---')
-console.log('eventName:', context.eventName)
-console.log('sha:', context.sha)
-console.log('ref:', context.ref)
-console.log('workflow:', context.workflow)
-console.log('action:', context.action)
-console.log('actor:', context.actor)
-console.log('job:', context.job)
-console.log('runNumber:', context.runNumber)
-console.log('runId:', context.runId)
-console.log('apiUrl:', context.apiUrl)
-console.log('serverUrl:', context.serverUrl)
-console.log('graphqlUrl:', context.graphqlUrl)
-console.log('-------------------')
+Diff().then(files => {
+    console.log(dedent(`
+    Your PR diff:
+    ${JSON.stringify(files, undefined, 2)}
+    `))
+})
 
-console.log('--- Payload ---')
-console.log(JSON.stringify(context.payload, undefined, 2))
-console.log('---------------')
 
 function welcome(name:string, repoUrl: string) {
     console.log(`'Hello ${name} You are running github actions in ${repoUrl}'`);
@@ -33,5 +23,22 @@ function welcome(name:string, repoUrl: string) {
  function repoUrl({repo, serverUrl}: GitHubContext): string {
     return `${serverUrl}/${repo.owner}/${repo.repo}`
   
+ }
+
+ async function Diff() {
+    if (ghToken) {
+        const octokit = getOctokit(ghToken)
+        const result = await octokit.rest.repos.compareCommits({
+            repo: context.repo.repo,
+            owner: context.repo.owner,
+            head: context.payload.pull_request.head.sha,
+            base: context.payload.pull_request.base.sha,
+            per_page: 100
+        })
+        return result.data.files || []
+
+    }
+    
+    return []
  }
 

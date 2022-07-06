@@ -11,3 +11,6 @@ inputs:
     description: "welcoming the user"
     required: false
     default: 'Github user'
+  ghToken:
+    description: 'Git Hub Token'
+    required: false
