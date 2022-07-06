@@ -1,0 +1,23 @@
+{
+  "name": "typescript-gha",
+  "version": "1.0.0",
+  "description": "typescript based github action",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kodurin/typescript-.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kodurin/typescript-/issues"
+  },
+  "homepage": "https://github.com/kodurin/typescript-#readme",
+  "optionalDependencies": {
+    "@types/node": "^18.0.3",
+    "typescript": "^4.7.4"
+  }
+}
