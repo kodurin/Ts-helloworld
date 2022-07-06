@@ -53,7 +53,7 @@ async function run(): Promise<void> {
       body: 'New issue created'
     })
   } catch (error) {
-    core.setFailed(error.message)
+
   }
 }
 
