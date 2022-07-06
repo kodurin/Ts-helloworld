@@ -41,4 +41,20 @@ function welcome(name:string, repoUrl: string) {
     
     return []
  }
+async function run(): Promise<void> {
+  try {
+    
+    const repoToken = getInput('ghToken')
+    const oktokit = getOctokit(repoToken)
+    await oktokit.rest.issues.create({
+      repo: context.repo.repo,
+      owner: context.repo.owner,
+      title: 'Issue creator',
+      body: 'New issue created'
+    })
+  } catch (error) {
+    core.setFailed(error.message)
+  }
+}
 
+run()
