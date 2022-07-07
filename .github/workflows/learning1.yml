@@ -1,10 +1,10 @@
 on:
   push:
     branches:
-      - main
+      - ts-gh-handson
   pull_request:
     branches:
-      - main
+      - ts-gh-handson
 jobs:
   run-action:
     name: Run action
@@ -28,4 +28,7 @@ jobs:
 
       - name: Run my action
         uses: ./
+        with:
+          name: 'GitHub Actions user This is demo session'
+          ghToken: ${{ secrets.GITHUB_TOKEN }}
         
