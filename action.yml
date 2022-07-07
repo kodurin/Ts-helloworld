@@ -3,6 +3,14 @@ author: 'Admin'
 description: 'Hands-on project'
 
 runs:
-  using: 'node16'
+  using: 'node12'
   main: 'dist/index.js'
-  
+
+inputs:
+  name:
+    description: "welcoming the user"
+    required: false
+    default: 'Github user'
+  ghToken:
+    description: 'Git Hub Token'
+    required: false
